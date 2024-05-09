@@ -1,5 +1,4 @@
 <template>
-<!--  <comment-form></comment-form>-->
   <comment-list></comment-list>
 </template>
 

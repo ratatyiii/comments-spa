@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
+use App\Models\User;
 
 class CommentController extends Controller
 {
@@ -13,21 +14,12 @@ class CommentController extends Controller
      */
     public function index()
     {
-//        $comments = Comment::with(['replies' => function ($query) {
-//            $query->orderBy('created_at');
-//        }, 'replies.user'])->get();
-
-        $comments = Comment::with(['replies.replies', 'replies.user'])->whereNull('parent_id')->get();
+        $comments = Comment::with(['replies.replies', 'replies.user'])
+            ->whereNull('parent_id')
+            ->orderByDesc('created_at')
+            ->get();
 
         return response()->json($comments);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -35,38 +27,10 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        //
-    }
+        $user = User::inRandomOrder()->first();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
+        $comment = Comment::create($request->validated() + ['user_id' => $user->id]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCommentRequest $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
-    {
-        //
+        return response()->json($comment->toArray() + ['replies' => []]);
     }
 }

@@ -10,7 +10,7 @@
                 <span class="card-header-right"></span>
             </h5>
             <div class="card-body">
-                <p class="card-text">{{ comment.text }}</p>
+                <p class="card-text" v-html="comment.text"></p>
                 <button v-if="!replyVisible[comment.id]" class="btn btn-primary" @click="toggleReply(comment)">
                     Ответить
                 </button>
@@ -20,7 +20,7 @@
                         <span>Добавление комментария</span>
                     </div>
                     <div class="card-body">
-                        <comment-form :comment-id="comment.id" @form-submitted="toggleReply(comment)"></comment-form>
+                        <comment-form :comment="comment" @form-submitted="toggleReply(comment)"></comment-form>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@ export default {
     components: {CommentForm},
     props: {
         replies: {
-            type: Array,
+            type: Object,
             required: false
         }
     },
