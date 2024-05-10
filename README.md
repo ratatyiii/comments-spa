@@ -8,7 +8,7 @@
 
 **Установка:**
 
-1. Скопируйте `.env.example` в `.env`.
+1. Скопируйте `.env.example` в `.env` и настройте его.
 2. Запустите `npm install` для установки JavaScript зависимостей.
 3. Запустите `composer install` для установки PHP зависимостей.
 4. Запустите `php artisan migrate` для создания таблиц базы данных.
@@ -19,3 +19,4 @@
 1. Запустите `php artisan serve` для запуска локального веб-сервера.
 2. Запустите `php artisan queue:work` для обработки очереди заданий.
 3. Запустите `php artisan reverb:start` для активации websocket.
+4. Запустите `npm run build` для сборки проекта.
