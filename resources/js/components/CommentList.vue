@@ -25,17 +25,11 @@
                 </div>
             </div>
         </div>
-        <!-- Nested Comments (Replies) -->
+
         <div class="ml-4">
-            <comment-list v-if="comment.replies.length > 0" :replies="comment.replies"></comment-list>
+            <comment-list v-if="comment.replies.length > 0" :comments="comment.replies"></comment-list>
         </div>
     </div>
-
-    <!--    <div class="pagination">-->
-    <!--      <button @click="handlePreviousPage" :disabled="currentPage === 1">Previous</button>-->
-    <!--      <span v-for="page in pageNumbers" :key="page" @click="handlePageChange(page)" :class="{ active: currentPage === page }">{{ page }}</span>-->
-    <!--      <button @click="handleNextPage" :disabled="currentPage === totalPages">Next</button>-->
-    <!--    </div>-->
 </template>
 
 <script>
@@ -45,9 +39,9 @@ export default {
     name: 'CommentList',
     components: {CommentForm},
     props: {
-        replies: {
+        comments: {
             type: Object,
-            required: false
+            required: true
         }
     },
     data() {
@@ -64,34 +58,10 @@ export default {
             }
         }
     },
-    computed: {
-        comments() {
-            return this.replies ? this.replies : this.$store.getters.getComments
-        }
-    },
-    mounted() {
-        if (!this.replies) {
-            this.$store.dispatch('fetchComments')
-        }
-    }
 }
 </script>
 
 <style scoped lang="less">
-.card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.card-body {
-    padding: 10px;
-}
-
-.card-title {
-    font-weight: bold;
-}
-
 .card-header {
     &-left {
         display: flex;

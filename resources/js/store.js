@@ -3,7 +3,7 @@ import {createStore} from 'vuex'
 const store = createStore({
     state() {
         return {
-            comments: {},
+            comments: [],
         }
     },
     mutations: {
@@ -53,6 +53,9 @@ const store = createStore({
     getters: {
         getComments(state) {
             return state.comments
+        },
+        getCommentsCount(state) {
+            return state.comments.length
         }
     }
 })

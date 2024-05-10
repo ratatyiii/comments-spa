@@ -1,76 +1,60 @@
 <template>
-  <div class="pagination">
-    <button @click="handlePreviousPage" :disabled="currentPage === 1">Previous</button>
-    <span v-for="page in pageNumbers" :key="page" @click="handlePageChange(page)" :class="{ active: currentPage === page }">{{ page }}</span>
-    <button @click="handleNextPage" :disabled="currentPage === totalPages">Next</button>
-  </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination mt-4" style="display: flex; align-items: center;justify-content: center">
+            <li :class="{'page-item' : true, 'disabled': currentPage === 1}">
+                <a @click="previousPage" class="page-link">Назад</a>
+            </li>
+
+            <li v-for="page in pageNumbers" :class="{'page-item' : true, 'active' : currentPage === page}"
+                aria-current="page">
+                <a @click="selectPage(page)" class="page-link" href="#">{{ page }}</a>
+            </li>
+
+            <li :class="{'page-item' : true, 'disabled': currentPage === totalPages}">
+                <a @click="nextPage" class="page-link" href="#">Вперед</a>
+            </li>
+        </ul>
+    </nav>
 </template>
 
 <script>
 export default {
-  props: {
-    totalComments: {
-      type: Number,
-      required: true,
+    name: 'CommentPagination',
+    props: {
+        totalPages: {
+            type: Number,
+            required: true,
+        },
+        currentPage: {
+            type: Number,
+            required: true,
+        },
     },
-    currentPage: {
-      type: Number,
-      required: true,
+    data() {
+        return {}
     },
-    perPage: {
-      type: Number,
-      required: true,
+    computed: {
+        pageNumbers() {
+            const startPage = Math.max(1, this.currentPage - 2)
+            const endPage = Math.min(this.totalPages, this.currentPage + 2)
+
+            return Array.from({length: endPage - startPage + 1}, (_, i) => startPage + i)
+        },
     },
-  },
-  computed: {
-    totalPages() {
-      return Math.ceil(this.totalComments / this.perPage);
+    methods: {
+        previousPage() {
+            this.$emit('change-page', this.currentPage - 1)
+        },
+        selectPage(page) {
+            this.$emit('select-page', page)
+        },
+        nextPage() {
+            this.$emit('change-page', this.currentPage + 1)
+        },
     },
-    pageNumbers() {
-      const startPage = Math.max(1, this.currentPage - 2);
-      const endPage = Math.min(this.totalPages, this.currentPage + 2);
-      return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-    },
-  },
-  methods: {
-    handlePreviousPage() {
-      if (this.currentPage > 1) {
-        this.$emit('update-page', this.currentPage - 1);
-      }
-    },
-    handlePageChange(page) {
-      this.$emit('update-page', page);
-    },
-    handleNextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.$emit('update-page', this.currentPage + 1);
-      }
-    },
-  },
-};
+}
 </script>
 
 <style scoped>
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
 
-.pagination button {
-  margin: 0 5px;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
-
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.pagination .active {
-  background-color: #eee;
-}
 </style>
