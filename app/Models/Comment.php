@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Comment extends Model
 {
@@ -20,6 +19,8 @@ class Comment extends Model
         'email',
         'home_page',
         'text',
+        'image',
+        'file'
     ];
 
     protected $hidden = [
@@ -39,7 +40,6 @@ class Comment extends Model
 
     public function replies(): HasMany
     {
-//        return $this->hasMany(CommentReply::class);
         return $this->hasMany(Comment::class, 'parent_id')->with('replies');
     }
 

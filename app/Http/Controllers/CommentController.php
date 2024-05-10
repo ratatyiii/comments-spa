@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class CommentController extends Controller
 {
@@ -29,8 +32,29 @@ class CommentController extends Controller
     {
         $user = User::inRandomOrder()->first();
 
-        $comment = Comment::create($request->validated() + ['user_id' => $user->id]);
+        $data = $request->validated();
+        $data['user_id'] = $user->id;
 
-        return response()->json($comment->toArray() + ['replies' => []]);
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($request->file('image'));
+            $image->resize(320, 240);
+
+            $path = 'comments/images/'.Str::random(40).'.'.$file->getClientOriginalExtension();
+
+            Storage::disk('public')->put($path, $image->encode());
+
+            $data['image'] = '/storage/'.$path;
+        }
+
+        if ($request->hasFile('file')) {
+            $data['file'] = '/storage/'.$request->file('file')->store('comments/files', 'public');
+        }
+
+        $comment = Comment::create($data)->refresh();
+
+        return response()->json($comment);
     }
 }

@@ -11,18 +11,28 @@
             </h5>
             <div class="card-body">
                 <p class="card-text" v-html="comment.text"></p>
-                <button v-if="!replyVisible[comment.id]" class="btn btn-primary" @click="toggleReply(comment)">
-                    Ответить
-                </button>
-
-                <div class="card" v-if="replyVisible[comment.id]">
-                    <div class="card-header">
-                        <span>Добавление комментария</span>
+                <div class="row">
+                    <div class="col align-self-start">
+                        <fancybox-wrapper v-if="comment.image" :options="fancyBoxOptions">
+                            <a data-fancybox="gallery" :href="comment.image">
+                                <img :src="comment.image" height="50" alt="Image">
+                            </a>
+                        </fancybox-wrapper>
                     </div>
-                    <div class="card-body">
-                        <comment-form :comment="comment" @form-submitted="toggleReply(comment)"></comment-form>
+                    <div class="col align-self-end">
+                        <button v-if="!replyVisible[comment.id]" @click="toggleReply(comment)"
+                                class="btn btn-primary float-end">
+                            Ответить
+                        </button>
                     </div>
                 </div>
+
+                <comment-form
+                    v-if="replyVisible[comment.id]"
+                    :comment="comment"
+                    @form-submitted="toggleReply(comment)"
+                    class="mt-4">
+                </comment-form>
             </div>
         </div>
 
@@ -34,10 +44,11 @@
 
 <script>
 import CommentForm from './CommentForm.vue'
+import FancyboxWrapper from './FancyboxWrapper.vue'
 
 export default {
     name: 'CommentList',
-    components: {CommentForm},
+    components: {CommentForm, FancyboxWrapper},
     props: {
         comments: {
             type: Object,
@@ -46,16 +57,17 @@ export default {
     },
     data() {
         return {
-            replyVisible: {}
+            replyVisible: [],
+            fancyBoxOptions: {
+                Carousel: {
+                    infinite: false,
+                },
+            }
         }
     },
     methods: {
         toggleReply(comment) {
             this.replyVisible[comment.id] = !this.replyVisible[comment.id]
-
-            if (this.replyVisible[comment.id]) {
-
-            }
         }
     },
 }

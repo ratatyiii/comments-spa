@@ -30,7 +30,6 @@ class StoreCommentRequest extends FormRequest
             ],
             'username' => [
                 'required',
-//                'regex:/^[\p{L}a-zA-Z0-9]+$/u',
                 'alpha_dash',
             ],
             'email' => [
@@ -44,6 +43,18 @@ class StoreCommentRequest extends FormRequest
             'text' => [
                 'required',
                 'regex:/^(<a\s+(?:[^>]*\s+)?href="[^"]*"\s*(?:[^>]*\s+)?title="[^"]*"\s*(?:[^>]*)?>.*<\/a>|<code>(?:[^<]|<\/?[^c]|<\/c[^o]|<\/co[^d]|<\/cod[^e]|<\/code[^>])*<\/code>|<i>(?:[^<]|<\/?[^i]|<\/i[^>])*<\/i>|<strong>(?:[^<]|<\/?[^s]|<\/s[^t]|<\/st[^r]|<\/str[^o]|<\/stro[^n]|<\/stron[^g]|<\/strong[^>])*<\/strong>|<p>(?:[^<]|<\/?[^p]|<\/p[^>])*<\/p>|[^<]+)*$/u',
+            ],
+            'image' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,gif',
+                'max:2048',
+            ],
+            'file' => [
+                'nullable',
+                'file',
+                'mimes:txt',
+                'max:100',
             ],
         ];
     }

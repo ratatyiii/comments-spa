@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mb-4">
         <header>
             <div class="d-flex flex-column flex-md-row align-items-center pb-3 mt-2 mb-4 border-bottom">
                 <router-link :to="{name: 'Index'}"
@@ -26,6 +26,14 @@
 
 export default {
     name: 'App',
+    methods: {
+        fetchComments() {
+            this.$store.dispatch('fetchComments')
+        },
+    },
+    mounted() {
+        this.fetchComments();
+    },
 }
 </script>
 

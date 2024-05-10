@@ -18,6 +18,8 @@ class CommentFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'home_page' => fake()->optional()->url(),
             'text' => fake()->realText(),
+            'image'=> fake()->optional()->imageUrl(320, 240),
+            'file' => fake()->optional()->url(),
             'updated_at' => fake()->dateTimeThisYear(),
             'created_at' => fake()->dateTimeThisYear(),
         ];

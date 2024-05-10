@@ -13,10 +13,12 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "@tinymce/tinymce-vue": "^5.1.1",
+        "@fancyapps/ui": "^5.0.36",
+        "@tinymce/tinymce-vue": "^4.0.4",
         "laravel-precognition-vue": "^0.5.4",
         "tinymce": "^7.1.0",
         "vue": "^3.4.27",
+        "vue-easy-lightbox": "^1.19.0",
         "vue-router": "^4.3.2",
         "vuex": "^4.1.0"
     }

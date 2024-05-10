@@ -21,19 +21,6 @@ export default {
             currentPage: 1,
         }
     },
-    mounted() {
-        this.$store.dispatch('fetchComments')
-    },
-    methods: {
-        selectPage(page) {
-            this.currentPage = page
-        },
-        changePage(page) {
-            if (page >= 1 && page <= this.totalPages) {
-                this.currentPage = page
-            }
-        }
-    },
     computed: {
         comments() {
             return this.$store.getters.getComments
@@ -48,6 +35,16 @@ export default {
             return Math.ceil(this.comments.length / this.perPage)
         }
     },
+    methods: {
+        selectPage(page) {
+            this.currentPage = page
+        },
+        changePage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page
+            }
+        }
+    }
 }
 </script>
 
