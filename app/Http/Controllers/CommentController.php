@@ -31,7 +31,7 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        $user = User::inRandomOrder()->first();
+        $user = User::factory()->create();
 
         $data = $request->validated();
         $data['user_id'] = $user->id;
