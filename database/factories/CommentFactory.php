@@ -14,6 +14,7 @@ class CommentFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
+            'parent_id' => null,
             'username' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'home_page' => fake()->optional()->url(),
