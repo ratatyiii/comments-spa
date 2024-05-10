@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Comment;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,19 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(3)->create()->each(function ($user) {
+        $comments = Comment::factory(100)
+            ->create();
 
-            $commentsCount = rand(1, 5);
-
-            for ($i = 1; $i <= $commentsCount; $i++) {
-                $comment = Comment::factory()->create(['user_id' => $user->id, 'username' => $user->username]);
-
-                $repliesCount = rand(0, 3);
-
-                for ($i = 1; $i <= $repliesCount; $i++) {
-                    Comment::factory()->hasReplies()->create(['parent_id' => $comment->id]);
-                }
-            }
+        $comments->each(function (Comment $comment) {
+            $comment->replies()->saveMany(Comment::factory(rand(1, 2))
+                ->hasReplies(rand(0, 1))
+                ->create());
         });
     }
 }
