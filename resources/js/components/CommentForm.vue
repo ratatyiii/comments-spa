@@ -124,8 +124,6 @@ export default {
             this.form.submit().then((response) => {
                 const data = response.data
 
-                this.$store.commit('addComment', data)
-
                 if (this.comment === undefined) {
                     this.$router.push({name: 'Index'})
                 } else {

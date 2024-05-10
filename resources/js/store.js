@@ -31,7 +31,7 @@ const store = createStore({
             if (newComment.parent_id) {
                 addCommentRecursively(state.comments, newComment)
             } else {
-                state.comments.push(newComment)
+                state.comments.unshift(newComment)
             }
         }
     },
@@ -41,8 +41,8 @@ const store = createStore({
                 const comments = response.data
 
                 commit('setComments', comments)
-            }).catch(reason => {
-                console.log(reason)
+            }).catch(error => {
+                console.log(error)
             })
         }
     },

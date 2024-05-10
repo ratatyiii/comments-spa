@@ -5,6 +5,7 @@
           <span class="card-header-left">
             <img src="https://i.pinimg.com/originals/08/d8/85/08d8857ea87db72970c6957879cf8062.png" alt="Avatar">
             <span class="username">{{ comment.username }}</span>
+            <span class="email">{{ comment.email }}</span>
             <span class="date">{{ comment.created_at }}</span>
           </span>
                 <span class="card-header-right"></span>
@@ -91,6 +92,11 @@ export default {
 
         .username {
             font-weight: bolder;
+        }
+
+        .email
+        {
+            font-size: 12px;
         }
 
         .date {

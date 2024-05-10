@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CommentAddEvent;
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
 use App\Models\User;
@@ -55,6 +56,8 @@ class CommentController extends Controller
 
         $comment = Comment::create($data)->refresh();
 
-        return response()->json($comment);
+        CommentAddEvent::dispatch($comment);
+
+        return response()->json(['message' => 'Комментарий успешно создан']);
     }
 }

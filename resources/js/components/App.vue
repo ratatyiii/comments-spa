@@ -32,6 +32,11 @@ export default {
         },
     },
     mounted() {
+        window.Echo.channel('comments')
+            .listen('CommentAddEvent', (data) => {
+                this.$store.commit('addComment', data.comment)
+            })
+
         this.fetchComments();
     },
 }
