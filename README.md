@@ -1,22 +1,21 @@
 ## Запуск приложения
 
-- Использование php8.2 и выше
+**Требования:**
 
-Для запуска нужно установить зависимости:
+* PHP 8.2 или выше
+* Composer
+* MySQL
 
-```bash
-npm install
-composer install
-php artisan migrate
-```
-Используйте параметр --seed при миграции если хотите заполнить базу тестовыми данными
+**Установка:**
 
-Запуск:
+1. Скопируйте `.env.example` в `.env`.
+2. Запустите `npm install` для установки JavaScript зависимостей.
+3. Запустите `composer install` для установки PHP зависимостей.
+4. Запустите `php artisan migrate` для создания таблиц базы данных.
+5. (Необязательно) Запустите `php artisan db:seed` для заполнения базы тестовыми данными.
 
-```bash
-php artisan serve
-php artisan queue:work
-php artisan reverb:start
-```
+**Запуск:**
 
-
+1. Запустите `php artisan serve` для запуска локального веб-сервера.
+2. Запустите `php artisan queue:work` для обработки очереди заданий.
+3. Запустите `php artisan reverb:start` для активации websocket.
