@@ -1,3 +1,4 @@
+/_docker/mysql
 /.phpunit.cache
 /node_modules
 /public/build
