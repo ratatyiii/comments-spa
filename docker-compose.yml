@@ -6,6 +6,7 @@ services:
         container_name: project_app
         volumes:
             - ./:/var/www/html
+            - ./storage/app/public:/var/www/html/public/storage
         networks:
             - project_network
 
