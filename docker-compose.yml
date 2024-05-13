@@ -87,6 +87,7 @@ services:
         restart: on-failure
         volumes:
             - ./:/var/www/html
+            - /var/www/html/node_modules
         depends_on:
             - app
         networks:
