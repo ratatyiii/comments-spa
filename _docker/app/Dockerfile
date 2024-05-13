@@ -35,6 +35,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 
 COPY . /var/www/html
 
-RUN composer install
-
 WORKDIR /var/www/html
+
+RUN composer install
+RUN php artisan storage:link
