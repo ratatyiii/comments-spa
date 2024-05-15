@@ -4,9 +4,14 @@ services:
             context: .
             dockerfile: _docker/app/Dockerfile
         container_name: project_app
+        working_dir: /var/www/html
         volumes:
             - ./:/var/www/html
             - ./storage/app/public:/var/www/html/public/storage
+        entrypoint: ["./_docker/app/entrypoint.sh"]
+        depends_on:
+            - laravel-reverb
+            - laravel-queue
         networks:
             - project_network
 
@@ -24,9 +29,6 @@ services:
         depends_on:
             - app
             - mysql
-            - node
-            - laravel-queue
-            - laravel-reverb
         networks:
             - project_network
 
