@@ -1,8 +1,5 @@
 FROM php:8.3-fpm
 
-#COPY ./_docker/app/php.ini /usr/local/etc/php/conf.d/php.ini
-
-# Install packages
 RUN apt-get update && apt-get install -y \
       build-essential \
       curl \
@@ -23,12 +20,17 @@ RUN apt-get update && apt-get install -y \
       apt-get clean && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Activate Gd extension
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install -j$(nproc) gd
 
 WORKDIR /var/www/html
 
-COPY . .
-
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY --chown=www-data:www-data . .
+
+ADD --chmod=775 _docker/app/entrypoint.sh /root/entrypoint.sh
+
+#COPY _docker/app/php.ini /usr/local/etc/php/conf.d/php.ini
+
+ENTRYPOINT ["/root/entrypoint.sh"]
+CMD ["php-fpm"]

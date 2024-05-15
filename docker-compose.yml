@@ -8,8 +8,8 @@ services:
         volumes:
             - ./:/var/www/html
             - ./storage/app/public:/var/www/html/public/storage
-        entrypoint: ["./_docker/app/entrypoint.sh"]
         depends_on:
+            - mysql
             - laravel-reverb
             - laravel-queue
         networks:

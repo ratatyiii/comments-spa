@@ -1,8 +1,8 @@
 FROM node:22
 
-COPY . /var/www/html
-
 WORKDIR /var/www/html
+
+COPY . .
 
 RUN npm install
 
